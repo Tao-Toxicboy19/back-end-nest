@@ -1,17 +1,34 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { PuppyService } from './puppy.service';
 import { PuppyDto } from './dto';
 import { Puppy } from './type/puppy.type';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('puppy')
 export class PuppyController {
     constructor(private readonly puppyService: PuppyService) { }
 
+    @Post("/upload")
+    @UseInterceptors(FileInterceptor('file', {
+        storage: diskStorage({
+            destination: "./uploads",
+            filename: (_, file, cb) => {
+                cb(null, `${file.originalname}`)
+            }
+        })
+    }))
+    async uploadFile(@UploadedFile() file: any) {
+        console.log(file);
+        return "success";
+    }
+
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    createPuppy(@Body() dto: PuppyDto): Promise<Puppy> {
-        return this.puppyService.createPuppy(dto)
+    async createPuppy(@Body() dto: PuppyDto): Promise<Puppy> {
+        return this.puppyService.createPuppy(dto);
     }
+
 
     @Get()
     @HttpCode(HttpStatus.OK)

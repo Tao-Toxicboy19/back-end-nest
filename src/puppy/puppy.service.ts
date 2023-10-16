@@ -11,7 +11,6 @@ export class PuppyService {
         const newPuppy = await this.prisma.puppys.create({
             data: {
                 puppyName: dto.puppyName,
-                age: dto.age,
                 breed: dto.breed,
             }
         });
@@ -35,7 +34,6 @@ export class PuppyService {
             where: { id },
             data: {
                 puppyName: dto.puppyName,
-                age: dto.age,
                 breed: dto.breed,
             },
         });
@@ -50,6 +48,4 @@ export class PuppyService {
 
         return deletedPuppy;
     }
-
-
 }

@@ -6,10 +6,6 @@ export class PuppyDto {
     puppyName: string;
 
     @IsNotEmpty()
-    @IsNumber()
-    age: number;
-
-    @IsNotEmpty()
     @IsString()
     breed: string;
 }
