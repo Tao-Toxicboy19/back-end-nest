@@ -7,11 +7,12 @@ import { Puppy } from './type/puppy.type';
 export class PuppyService {
     constructor(private prisma: PrismaService) { }
 
-    async createPuppy(dto: PuppyDto): Promise<Puppy> {
+    async createPuppy(dto: PuppyDto, fileAddress: string): Promise<Puppy> {
         const newPuppy = await this.prisma.puppys.create({
             data: {
                 puppyName: dto.puppyName,
                 breed: dto.breed,
+                fileAddress: fileAddress,
             }
         });
         return newPuppy;

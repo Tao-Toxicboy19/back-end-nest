@@ -19,7 +19,8 @@ model User {
 }
 
 model Puppys {
-  id        Int    @id @default(autoincrement())
-  puppyName String
-  breed     String
+  id          Int    @id @default(autoincrement())
+  puppyName   String
+  breed       String
+  fileAddress String
 }
